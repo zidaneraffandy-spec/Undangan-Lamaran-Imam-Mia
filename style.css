@@ -57,7 +57,6 @@ button{font:inherit; cursor:pointer}
     linear-gradient(-160deg, rgba(78,10,35,.55), transparent 42%);
   pointer-events:none;
 }
-.cover.is-open{opacity:0; visibility:hidden; transform:scale(1.06) translateY(-2%)}
 
 .cover-inner{
   position:relative; z-index:3;
@@ -137,7 +136,7 @@ button{font:inherit; cursor:pointer}
 }
 
 /* envelope opening burst */
-.cover.is-open .hero-card{transform:translateY(-30px) scale(.92); opacity:0; transition:.8s var(--ease)}
+.cover.is-open .hero-card{transition:.8s var(--ease)}
 .cover.is-open .open-btn{opacity:0; transform:scale(.7); transition:.5s var(--ease)}
 
 /* ═══════════ MAIN ═══════════ */
