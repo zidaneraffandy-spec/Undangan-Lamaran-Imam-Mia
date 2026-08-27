@@ -3,13 +3,11 @@
    ══════════════════════════════════════════════ */
 const CONFIG = {
   couple: 'Imam & Mia',
-  // Waktu acara (WIB / UTC+7)
   start: '2026-09-27T13:00:00+07:00',
   end:   '2026-09-27T17:00:00+07:00',
   address: "Mia's House, Jl. Pepaya 4 No. 9, Pondok Makmur, Rt.005/Rw.007, Kutabaru, Pasarkemis, Tangerang",
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Jl.+Pepaya+4+No.+9+Pondok+Makmur+Kutabaru+Pasarkemis+Tangerang',
-  // Ganti dengan nomor WhatsApp tuan rumah (format internasional, tanpa + atau spasi)
-  waNumber: '6281234567890',
+  mapsUrl: "https://maps.google.com/?q=Mia's+House,+Pasarkemis,+Tangerang",
+  musicPath: 'assets/custom-music.mp3', // Ganti lokasi lagu kustom di sini
   fallbackGuest: 'Tamu Undangan'
 };
 
@@ -26,13 +24,12 @@ function toast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-/* ── 1. Nama tamu dinamis (?to=Budi+&+Keluarga) ── */
+/* ── 1. Nama tamu dinamis (?to=Nama) ─────── */
 function readGuest() {
   const p = new URLSearchParams(location.search);
   let raw = p.get('to') ?? p.get('kepada') ?? p.get('nama') ?? p.get('guest') ?? '';
   raw = raw.replace(/\+/g, ' ').replace(/\s+/g, ' ').trim();
   if (!raw) return CONFIG.fallbackGuest;
-  // sanitasi: buang tag/karakter aneh, batasi panjang
   raw = raw.replace(/[<>{}[\]\\^~`|]/g, '').slice(0, 70);
   return raw || CONFIG.fallbackGuest;
 }
@@ -48,6 +45,11 @@ const main = $('#main');
 const bgm = $('#bgm');
 const fab = $('#musicFab');
 let opened = false;
+
+// Pastikan audio memuat musik kustom dari CONFIG jika diatur
+if (CONFIG.musicPath && bgm.getAttribute('src') !== CONFIG.musicPath) {
+  bgm.src = CONFIG.musicPath;
+}
 
 function openInvitation() {
   if (opened) return;
@@ -155,80 +157,7 @@ $('#copyAddr').addEventListener('click', async () => {
   }
 });
 
-/* ── 7. RSVP + Buku ucapan ───────────────── */
-const SEED = [
-  { name: 'Keluarga Bapak Suryana', att: 'Hadir', msg: 'Selamat Imam & Mia. Semoga lancar sampai hari pernikahan nanti.' },
-  { name: 'Rani & Dwi', att: 'Hadir', msg: 'Dari kecil sudah bareng, sekarang tunangan. Bahagia terus ya kalian.' },
-  { name: 'Om Hendra', att: 'Masih Ragu', msg: 'Doa terbaik dari kami, semoga acaranya berjalan khidmat dan penuh berkah.' }
-];
-// Catatan: ucapan disimpan di memori halaman (tanpa server).
-// Untuk data yang masuk ke tuan rumah, gunakan tombol "Kirim via WhatsApp".
-let wishes = SEED.slice();
-
-function badgeClass(att) {
-  return att === 'Tidak Hadir' ? 'no' : att === 'Masih Ragu' ? 'maybe' : '';
-}
-function renderWishes() {
-  const ul = $('#wishList');
-  ul.innerHTML = '';
-  if (!wishes.length) {
-    ul.innerHTML = '<li class="wish-empty">Belum ada ucapan. Jadilah yang pertama mendoakan.</li>';
-  } else {
-    wishes.forEach(w => {
-      const li = document.createElement('li');
-      li.className = 'wish-item';
-      const top = document.createElement('div');
-      top.className = 'wish-top';
-      const nm = document.createElement('span');
-      nm.className = 'wish-name'; nm.textContent = w.name;
-      const bd = document.createElement('span');
-      bd.className = 'wish-badge ' + badgeClass(w.att); bd.textContent = w.att;
-      top.append(nm, bd);
-      const p = document.createElement('p');
-      p.className = 'wish-msg'; p.textContent = w.msg;
-      li.append(top);
-      if (w.msg) li.append(p);
-      ul.append(li);
-    });
-  }
-  const hadir = wishes.filter(w => w.att === 'Hadir').length;
-  $('#wishCount').textContent = `${wishes.length} ucapan · ${hadir} menyatakan hadir`;
-}
-
-// pre-fill nama tamu
-if (GUEST !== CONFIG.fallbackGuest) $('#fName').value = GUEST;
-renderWishes();
-
-function formData() {
-  return {
-    name: $('#fName').value.trim(),
-    att: ($$('input[name="hadir"]').find(r => r.checked) || {}).value || 'Hadir',
-    count: $('#fCount').value,
-    msg: $('#fMsg').value.trim()
-  };
-}
-
-$('#rsvpForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const d = formData();
-  if (!d.name) { $('#fName').focus(); toast('Mohon isi nama terlebih dahulu'); return; }
-  wishes = [{ name: d.name, att: d.att, msg: d.msg || 'Turut berbahagia untuk Imam & Mia.' }, ...wishes];
-  renderWishes();
-  $('#fMsg').value = '';
-  toast('Terima kasih, ucapan Anda sudah tercatat');
-  $('#wishList').scrollTop = 0;
-});
-
-$('#waBtn').addEventListener('click', () => {
-  const d = formData();
-  if (!d.name) { $('#fName').focus(); toast('Mohon isi nama terlebih dahulu'); return; }
-  const text = `Konfirmasi Kehadiran — Lamaran ${CONFIG.couple}\n\n`
-    + `Nama: ${d.name}\nKehadiran: ${d.att}\nJumlah tamu: ${d.count}\n`
-    + (d.msg ? `Ucapan: ${d.msg}\n` : '');
-  window.open(`https://wa.me/${CONFIG.waNumber}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
-});
-
-/* ── 8. Scroll reveal ────────────────────── */
+/* ── 7. Scroll reveal ────────────────────── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => {
     if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
@@ -243,7 +172,7 @@ function revealScan() {
 }
 revealScan();
 
-/* ── 9. Partikel hati & kilau ────────────── */
+/* ── 8. Partikel hati & kilau ────────────── */
 (function sparkles() {
   const c = $('#sparkles');
   if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
