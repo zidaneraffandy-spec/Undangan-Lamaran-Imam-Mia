@@ -3,13 +3,21 @@
    ══════════════════════════════════════════════ */
 const CONFIG = {
   couple: 'Imam & Mia',
+  // Waktu acara (WIB / UTC+7)
   start: '2026-09-27T13:00:00+07:00',
   end:   '2026-09-27T17:00:00+07:00',
   address: "Mia's House, Jl. Pepaya 4 No. 9, Pondok Makmur, Rt.005/Rw.007, Kutabaru, Pasarkemis, Tangerang",
-  mapsUrl: "https://maps.google.com/?q=Mia's+House,+Pasarkemis,+Tangerang",
-  musicPath: 'assets/custom-music.mp3', // Ganti lokasi lagu kustom di sini
-  fallbackGuest: 'Tamu Undangan'
+  // Titik lokasi tunggal — sumber kebenaran untuk iframe peta & tombol petunjuk arah
+  location: { lat: -6.1565507, lng: 106.5792806 },
+  fallbackGuest: 'Tamu Undangan',
+  // Ganti dengan path berkas musik kustom Anda
+  musicSrc: 'assets/custom-music.mp3'
 };
+
+// URL peta diturunkan dari satu titik lokasi yang sama, agar iframe & tombol
+// arah selalu merujuk ke referensi lokasi yang identik.
+CONFIG.mapsEmbedUrl = `https://www.google.com/maps?q=${CONFIG.location.lat},${CONFIG.location.lng}&z=17&output=embed`;
+CONFIG.mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${CONFIG.location.lat},${CONFIG.location.lng}`;
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -24,12 +32,13 @@ function toast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-/* ── 1. Nama tamu dinamis (?to=Nama) ─────── */
+/* ── 1. Nama tamu dinamis (?to=Budi+&+Keluarga) ── */
 function readGuest() {
   const p = new URLSearchParams(location.search);
   let raw = p.get('to') ?? p.get('kepada') ?? p.get('nama') ?? p.get('guest') ?? '';
   raw = raw.replace(/\+/g, ' ').replace(/\s+/g, ' ').trim();
   if (!raw) return CONFIG.fallbackGuest;
+  // sanitasi: buang tag/karakter aneh, batasi panjang
   raw = raw.replace(/[<>{}[\]\\^~`|]/g, '').slice(0, 70);
   return raw || CONFIG.fallbackGuest;
 }
@@ -45,11 +54,6 @@ const main = $('#main');
 const bgm = $('#bgm');
 const fab = $('#musicFab');
 let opened = false;
-
-// Pastikan audio memuat musik kustom dari CONFIG jika diatur
-if (CONFIG.musicPath && bgm.getAttribute('src') !== CONFIG.musicPath) {
-  bgm.src = CONFIG.musicPath;
-}
 
 function openInvitation() {
   if (opened) return;
@@ -68,7 +72,12 @@ function openInvitation() {
 }
 $('#openBtn').addEventListener('click', openInvitation);
 
-/* ── 3. Musik latar ──────────────────────── */
+/* ── 3. Musik latar (kustom) ─────────────── */
+// Pastikan sumber audio selalu mengikuti CONFIG.musicSrc (satu sumber kebenaran).
+if (bgm.getAttribute('src') !== CONFIG.musicSrc) {
+  bgm.setAttribute('src', CONFIG.musicSrc);
+}
+
 function syncFab() { fab.classList.toggle('playing', !bgm.paused); }
 function playMusic() {
   bgm.volume = 0;
@@ -157,7 +166,11 @@ $('#copyAddr').addEventListener('click', async () => {
   }
 });
 
-/* ── 7. Scroll reveal ────────────────────── */
+/* ── 7. Lokasi peta (satu titik terpadu) ─── */
+$('#mapFrame').src = CONFIG.mapsEmbedUrl;
+$('#mapsBtn').href = CONFIG.mapsUrl;
+
+/* ── 8. Scroll reveal ────────────────────── */
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => {
     if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
@@ -172,7 +185,7 @@ function revealScan() {
 }
 revealScan();
 
-/* ── 8. Partikel hati & kilau ────────────── */
+/* ── 9. Partikel hati & kilau ────────────── */
 (function sparkles() {
   const c = $('#sparkles');
   if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Imam & Mia — Undangan Lamaran · 27.09.2026</title>
-<meta name="description" content="And Finally These kids are Getting Engaged! Undangan lamaran Imam & Mia, Minggu 27 September 2026, Mia's House, Pasarkemis, Tangerang." />
+<title>Imam &amp; Mia — Undangan Lamaran · 27.09.2026</title>
+<meta name="description" content="And Finally These kids are Getting Engaged! Undangan lamaran Imam &amp; Mia, Minggu 27 September 2026, Mia's House, Pasarkemis, Tangerang." />
 <meta name="theme-color" content="#6D1133" />
-<meta property="og:title" content="Imam & Mia — Undangan Lamaran" />
+<meta property="og:title" content="Imam &amp; Mia — Undangan Lamaran" />
 <meta property="og:description" content="Minggu, 27 September 2026 · 13.00 - selesai · Mia's House, Pasarkemis" />
 <meta property="og:image" content="assets/hero-card.webp" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -19,6 +19,7 @@
 
 <canvas id="sparkles" aria-hidden="true"></canvas>
 
+<!-- ═══════════════ COVER ═══════════════ -->
 <div id="cover" class="cover">
   <div class="cover-flap" aria-hidden="true"></div>
   <img class="bow bow-tl" src="assets/bow-ribbon.webp" alt="" aria-hidden="true" />
@@ -29,7 +30,7 @@
   <div class="cover-inner">
     <img class="badge-af" src="assets/badge-andfinally.webp" alt="And Finally" />
     <img class="hero-card" src="assets/hero-card.webp"
-         alt="These kids are Getting Engaged! Imam & Mia — 27.09.2026" />
+         alt="These kids are Getting Engaged! Imam &amp; Mia — 27.09.2026" />
 
     <div class="guest-box" id="guestBox">
       <p class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i</p>
@@ -45,8 +46,10 @@
   </div>
 </div>
 
+<!-- ═══════════════ MAIN ═══════════════ -->
 <main id="main" class="main" aria-hidden="true">
 
+  <!-- SAVE THE DATE -->
   <section class="sec sec-date" id="tanggal">
     <div class="doily-wrap reveal">
       <img class="doily-savedate" src="assets/doily-savedate.webp" alt="Save the date!" />
@@ -78,6 +81,7 @@
     <img class="gold-bow reveal" src="assets/gold-bow.webp" alt="" aria-hidden="true" />
   </section>
 
+  <!-- LOCATION (single, consolidated location point) -->
   <section class="sec sec-loc" id="lokasi">
     <img class="band" src="assets/gold-band.webp" alt="" aria-hidden="true" />
     <img class="label reveal" src="assets/label-location.webp" alt="Location" />
@@ -91,18 +95,17 @@
     <div class="map-frame reveal">
       <div class="map-inner">
         <iframe id="mapFrame" title="Peta lokasi Mia's House" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Mia's%20House,%20Pasarkemis,%20Tangerang&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
 
     <div class="btn-row reveal">
-      <a class="pbtn pulse" id="mapsBtn" target="_blank" rel="noopener"
-         href="https://maps.google.com/?q=Mia's+House,+Pasarkemis,+Tangerang">Petunjuk Lokasi (Google Maps)</a>
+      <a class="pbtn pulse" id="mapsBtn" target="_blank" rel="noopener" href="#">Petunjuk Lokasi (Google Maps)</a>
     </div>
     <img class="band" src="assets/gold-band.webp" alt="" aria-hidden="true" />
   </section>
 
+  <!-- DRESSCODE -->
   <section class="sec sec-dress" id="dresscode">
     <img class="flower fl-l" src="assets/flowers.webp" alt="" aria-hidden="true" />
     <img class="flower fl-r" src="assets/flowers.webp" alt="" aria-hidden="true" />
@@ -112,27 +115,28 @@
     <p class="dress-note reveal">Mohon kenakan salah satu warna di atas — biar kenangannya makin senada.</p>
   </section>
 
+  <!-- CLOSING -->
   <section class="sec sec-close" id="penutup">
     <img class="band" src="assets/gold-band.webp" alt="" aria-hidden="true" />
-    <img class="heart-photo reveal" src="assets/heart-photo.webp" alt="Imam & Mia" />
+    <img class="heart-photo reveal" src="assets/heart-photo.webp" alt="Imam &amp; Mia" />
     <img class="badge-join reveal" src="assets/badge-join.webp" alt="Join us to celebrate!" />
     <p class="closing-text reveal">
       Merupakan kehormatan dan kebahagiaan bagi kami<br />
       apabila Bapak/Ibu/Saudara/i berkenan hadir<br />
       untuk memberikan doa restu.
     </p>
-    <p class="closing-sign reveal">Imam & Mia</p>
+    <p class="closing-sign reveal">Imam &amp; Mia</p>
     <img class="band" src="assets/gold-band.webp" alt="" aria-hidden="true" />
     <p class="credit">Undangan digital · 27.09.2026</p>
   </section>
 </main>
 
+<!-- MUSIC WIDGET -->
 <button class="music-fab" id="musicFab" type="button" aria-label="Putar / hentikan musik" hidden>
   <span class="disc" aria-hidden="true"></span>
   <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
   <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3.2v13H7.5zm5.8 0h3.2v13h-3.2z"/></svg>
 </button>
-
 <audio id="bgm" src="assets/custom-music.mp3" loop preload="auto"></audio>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
