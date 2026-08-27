@@ -227,35 +227,29 @@ button{font:inherit; cursor:pointer}
 }
 
 /* closing */
-/* closing */
+/* ═══════════ PERBAIKAN FOTO TERPOTONG ═══════════ */
 .sec-close {
-  overflow: visible;
-  padding-bottom: clamp(20px, 5vw, 36px);
+  overflow: visible !important;
 }
-.heart-photo {
-  width: min(100%, 340px);
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 14px 28px rgba(0,0,0,.3));
-  position: relative;
-  z-index: 1;
+
+.sec-close .heart-photo {
+  width: min(100%, 340px) !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
-.badge-join {
-  width: min(94%, 320px);
-  height: auto;
-  object-fit: contain;
-  margin-top: -35px; /* Menumpuk rapi di atas foto */
-  margin-bottom: 24px; /* Jarak ke pita emas di bawahnya */
-  position: relative;
-  z-index: 2;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,.25));
-}
-.credit {
-  margin: 12px 0 calc(84px + env(safe-area-inset-bottom));
-  font-size: 10.5px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(244,223,164,.5);
+
+.sec-close .badge-join {
+  width: min(94%, 320px) !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  margin-top: -45px !important; /* Menutup batas bawah foto agar menumpuk rapi */
+  margin-bottom: 24px !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 /* ═══════════ MUSIC FAB ═══════════ */
 .music-fab[hidden]{display:none}
