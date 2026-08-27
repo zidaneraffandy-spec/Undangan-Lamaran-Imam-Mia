@@ -35,7 +35,7 @@ body{
   overflow-x:hidden;
 }
 body.locked{overflow:hidden; height:100vh}
-img{max-width:100%; display:block; height:auto}
+img{max-width:100%; display:block; height:auto; object-fit:contain}
 button{font:inherit; cursor:pointer}
 
 /* sparkles canvas */
@@ -70,12 +70,13 @@ button{font:inherit; cursor:pointer}
   text-align:center;
 }
 .badge-af{
-  flex:none;
+  flex:none; min-width:0;
   width:min(64%, 240px, calc(10vh * 1.69));
+  max-width:100%; height:auto; object-fit:contain;
   filter:drop-shadow(0 6px 14px rgba(0,0,0,.28))
 }
 .hero-card{
-  flex:0 1 auto; min-height:0;
+  flex:0 1 auto; min-height:0; min-width:0;
   width:auto; height:auto;
   max-width:min(100%, 330px, calc(46vh * 0.702));
   max-height:100%; object-fit:contain;
@@ -84,11 +85,12 @@ button{font:inherit; cursor:pointer}
 }
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-.bow{position:absolute; width:clamp(84px,26vw,140px); opacity:.92; z-index:2; pointer-events:none}
-.bow-tl{top:-6px; left:-14px}
-.bow-tr{top:-6px; right:-14px; transform:scaleX(-1)}
-.bow-bl{bottom:-6px; left:-14px; transform:scaleY(-1)}
-.bow-br{bottom:-6px; right:-14px; transform:scale(-1,-1)}
+/* bows: inset within the cover's clipping box so nothing is truncated */
+.bow{position:absolute; width:clamp(64px,20vw,110px); max-width:22vw; opacity:.92; z-index:2; pointer-events:none; object-fit:contain}
+.bow-tl{top:0; left:0}
+.bow-tr{top:0; right:0; transform:scaleX(-1)}
+.bow-bl{bottom:0; left:0; transform:scaleY(-1)}
+.bow-br{bottom:0; right:0; transform:scale(-1,-1)}
 
 /* guest name */
 .guest-box{
@@ -122,12 +124,7 @@ button{font:inherit; cursor:pointer}
 }
 .open-btn:hover,.open-btn:focus-visible{transform:scale(1.05)}
 .open-btn:active{transform:scale(.96)}
-.open-seal{
-  position:absolute; left:-30px; top:50%; margin-top:-20px;
-  width:40px; filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));
-  animation:seal-wobble 3.6s ease-in-out infinite;
-}
-@keyframes seal-wobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) scale(1.06)}}
+
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
 .open-hint{
   margin:clamp(6px,1.6vh,12px) 0 0; font-family:var(--font-serif); font-style:italic;
@@ -153,7 +150,7 @@ button{font:inherit; cursor:pointer}
   display:flex; flex-direction:column; align-items:center; text-align:center;
   gap:clamp(14px,4vw,22px);
 }
-.band{width:calc(100% + var(--pad)*2); max-width:none; margin:0 calc(var(--pad)*-1); opacity:.95}
+.band{width:calc(100% + var(--pad)*2); max-width:none; margin:0 calc(var(--pad)*-1); opacity:.95; object-fit:cover}
 .sec-date{padding-top:0; padding-bottom:clamp(14px,4vw,24px)}
 .doily-wrap{width:calc(100% + var(--pad)*2); margin:0 calc(var(--pad)*-1) 8px}
 .doily-savedate{width:100%; filter:drop-shadow(0 10px 22px rgba(0,0,0,.28))}
@@ -203,15 +200,10 @@ button{font:inherit; cursor:pointer}
 }
 .pbtn.ghost:hover{background:rgba(244,223,164,.12)}
 .pbtn.pulse{animation:pulse 2.4s ease-in-out infinite}
-/* ghost button on light lace card */
-.lace-card .pbtn.ghost{
-  color:var(--maroon); box-shadow:inset 0 0 0 1.5px rgba(124,11,34,.45)
-}
-.lace-card .pbtn.ghost:hover{background:rgba(124,11,34,.07)}
 
-/* location */
-.label{width:min(86%,300px)}
-.oval-address{width:min(100%,330px); filter:drop-shadow(0 10px 22px rgba(0,0,0,.3))}
+/* location — single map, single address reference */
+.label{width:min(86%,300px); max-width:100%; height:auto; object-fit:contain}
+.oval-address{width:min(100%,330px); max-width:100%; height:auto; object-fit:contain; filter:drop-shadow(0 10px 22px rgba(0,0,0,.3))}
 .map-frame{
   width:min(100%,340px); padding:9px; border-radius:20px;
   background:
@@ -227,90 +219,14 @@ button{font:inherit; cursor:pointer}
 .flower{position:absolute; top:0; width:clamp(70px,22vw,108px); opacity:.95; pointer-events:none}
 .fl-l{left:-8px}
 .fl-r{right:-8px; transform:scaleX(-1)}
-.badge-dress{width:min(78%,280px); margin-top:clamp(4px,3vw,16px); filter:drop-shadow(0 6px 14px rgba(0,0,0,.26))}
-.dress-card{width:min(92%,300px); filter:drop-shadow(0 12px 26px rgba(0,0,0,.32))}
+.badge-dress{width:min(78%,280px); max-width:100%; height:auto; object-fit:contain; margin-top:clamp(4px,3vw,16px); filter:drop-shadow(0 6px 14px rgba(0,0,0,.26))}
+.dress-card{width:min(92%,300px); max-width:100%; height:auto; object-fit:contain; filter:drop-shadow(0 12px 26px rgba(0,0,0,.32))}
 .dress-note{
   margin:0; max-width:300px; font-family:var(--font-serif); font-style:italic;
   font-size:14px; line-height:1.6; color:rgba(251,243,228,.85)
 }
 
-/* rsvp + guestbook */
-.script-title{
-  margin:0; max-width:340px; font-family:var(--font-script);
-  font-size:clamp(26px,7.4vw,34px); font-weight:400; line-height:1.2;
-  color:var(--white-lace); text-shadow:0 2px 10px rgba(0,0,0,.3)
-}
-.lace-card{
-  position:relative; width:100%; max-width:340px;
-  padding:22px 18px; border-radius:8px;
-  background:linear-gradient(180deg,#FFFDF8,#FBF1E2);
-  box-shadow:0 14px 30px rgba(0,0,0,.3);
-  text-align:left; color:var(--maroon-ink);
-}
-/* scalloped lace edges */
-.lace-card::before,.lace-card::after{
-  content:""; position:absolute; left:0; right:0; height:12px;
-  background:radial-gradient(circle at 6px 6px, #FFFDF8 5.6px, transparent 6px) 0 0/12px 12px repeat-x;
-}
-.lace-card::before{top:-11px}
-.lace-card::after{bottom:-11px; transform:scaleY(-1)}
-
-.fld{display:block; margin-bottom:14px; border:0; padding:0}
-.fld > span, .fld legend{
-  display:block; margin-bottom:5px; padding:0;
-  font-family:var(--font-sans); font-size:11px; font-weight:700;
-  letter-spacing:.13em; text-transform:uppercase; color:#A85070
-}
-.fld input[type=text], .fld select, .fld textarea{
-  width:100%; padding:10px 12px; border-radius:9px;
-  border:1.5px solid rgba(124,11,34,.24);
-  background:#fff; color:var(--maroon-ink);
-  font-family:var(--font-serif); font-size:15px;
-  transition:border-color .2s, box-shadow .2s;
-}
-.fld textarea{resize:vertical; min-height:74px}
-.fld input:focus, .fld select:focus, .fld textarea:focus{
-  outline:0; border-color:var(--maroon); box-shadow:0 0 0 3px rgba(242,160,168,.35)
-}
-.fld.half select{width:auto; min-width:150px}
-.chips{display:flex; flex-wrap:wrap; gap:7px}
-.chip{position:relative; cursor:pointer}
-.chip input{position:absolute; opacity:0; inset:0; cursor:pointer}
-.chip span{
-  display:block; padding:8px 14px; border-radius:999px;
-  font-size:12.5px; font-weight:600;
-  background:#fff; color:#A85070; border:1.5px solid rgba(124,11,34,.22);
-  transition:.2s var(--ease)
-}
-.chip input:checked + span{
-  background:linear-gradient(180deg,#8C1739,var(--maroon)); color:var(--cream);
-  border-color:var(--maroon); transform:translateY(-1px);
-  box-shadow:0 4px 10px rgba(109,17,51,.35)
-}
-.chip input:focus-visible + span{box-shadow:0 0 0 3px rgba(242,160,168,.55)}
-
-.wishes{padding:16px 6px 16px 16px}
-.wish-list{
-  list-style:none; margin:0; padding:0 10px 0 0;
-  max-height:290px; overflow-y:auto; scrollbar-width:thin;
-  scrollbar-color:rgba(124,11,34,.35) transparent;
-}
-.wish-list::-webkit-scrollbar{width:6px}
-.wish-list::-webkit-scrollbar-thumb{background:rgba(124,11,34,.3); border-radius:6px}
-.wish-item{padding:11px 2px 12px; border-bottom:1px dashed rgba(124,11,34,.2)}
-.wish-item:last-child{border-bottom:0}
-.wish-top{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
-.wish-name{font-family:var(--font-serif); font-weight:600; font-size:15px; color:var(--maroon)}
-.wish-badge{
-  flex:none; font-size:9.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-  padding:3px 8px; border-radius:999px; background:rgba(242,160,168,.3); color:#8B2242
-}
-.wish-badge.no{background:rgba(20,16,20,.1); color:#5A4450}
-.wish-badge.maybe{background:rgba(224,168,31,.25); color:#8A6510}
-.wish-msg{margin:5px 0 0; font-family:var(--font-serif); font-size:14px; line-height:1.55; color:#5C3B48}
-.wish-empty{padding:16px 4px; font-family:var(--font-serif); font-style:italic; color:#8B6072; text-align:center}
-.wish-count{margin:0; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,223,164,.75)}
-
+/* closing */
 /* closing */
 .sec-close {
   overflow: visible;
