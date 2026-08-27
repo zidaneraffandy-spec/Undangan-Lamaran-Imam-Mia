@@ -242,7 +242,28 @@ button{font:inherit; cursor:pointer}
   position: relative;
   z-index: 1; /* Berada di bawah badge join */
 }
-.badge-join{width:min(94%,320px); max-width:100%; height:auto; object-fit:contain; margin-top:clamp(-14px,-3vw,-6px)}
+.badge-join {
+  width: min(94%, 320px);
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain;
+  /* Margin negatif untuk membuat badge menumpuk (overlap) rapi di atas foto */
+  margin-top: -38px; 
+  position: relative;
+  z-index: 2; /* Berada di atas foto agar numpuknya sempurna */
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.25));
+}
+.closing-text {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  max-width: 290px;
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: rgba(251, 243, 228, .9);
+  position: relative;
+  z-index: 2;
+}
 .closing-text{
   margin:0; max-width:290px; font-family:var(--font-serif); font-size:14.5px;
   line-height:1.75; color:rgba(251,243,228,.9)
