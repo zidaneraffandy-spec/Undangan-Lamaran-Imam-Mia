@@ -232,7 +232,16 @@ button{font:inherit; cursor:pointer}
 }
 
 /* closing */
-.heart-photo{width:min(100%,340px); max-width:100%; height:auto; object-fit:contain; filter:drop-shadow(0 14px 28px rgba(0,0,0,.3))}
+.heart-photo {
+  width: min(100%, 340px);
+  height: auto !important;
+  max-height: none !important; /* Hapus batasan tinggi yang membuat gambar ter-crop */
+  object-fit: contain;
+  margin: 0 auto;
+  filter: drop-shadow(0 14px 28px rgba(0,0,0,.3));
+  position: relative;
+  z-index: 1; /* Berada di bawah badge join */
+}
 .badge-join{width:min(94%,320px); max-width:100%; height:auto; object-fit:contain; margin-top:clamp(-14px,-3vw,-6px)}
 .closing-text{
   margin:0; max-width:290px; font-family:var(--font-serif); font-size:14.5px;
