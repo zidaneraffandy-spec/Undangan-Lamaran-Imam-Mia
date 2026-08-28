@@ -110,8 +110,8 @@ button { font: inherit; cursor: pointer; }
 
 .hero-card {
   flex: 0 1 auto;
-  width: min(100%, 320px);
-  max-height: 40vh;
+  width: min(96%, 380x);
+  max-height: 50vh;
   object-fit: contain;
   filter: drop-shadow(0 14px 30px rgba(0,0,0,.34));
   animation: floaty 7s ease-in-out infinite;
