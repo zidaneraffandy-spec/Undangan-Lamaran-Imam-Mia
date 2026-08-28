@@ -10,8 +10,8 @@ const CONFIG = {
   // Titik lokasi tunggal — sumber kebenaran untuk iframe peta & tombol petunjuk arah
   location: { lat: -6.1565507, lng: 106.5792806 },
   fallbackGuest: 'Tamu Undangan',
-  // Ganti dengan path berkas musik kustom Anda
-  musicSrc: 'assets/custom-music.mp3'
+  // Path berkas musik latar (letakkan file di folder assets/)
+  musicSrc: 'assets/music.mp3'
 };
 
 // URL peta diturunkan dari satu titik lokasi yang sama, agar iframe & tombol
@@ -72,8 +72,7 @@ function openInvitation() {
 }
 $('#openBtn').addEventListener('click', openInvitation);
 
-/* ── 3. Musik latar (kustom) ─────────────── */
-// Pastikan sumber audio selalu mengikuti CONFIG.musicSrc (satu sumber kebenaran).
+/* ── 3. Musik latar ──────────────────────── */
 if (bgm.getAttribute('src') !== CONFIG.musicSrc) {
   bgm.setAttribute('src', CONFIG.musicSrc);
 }
